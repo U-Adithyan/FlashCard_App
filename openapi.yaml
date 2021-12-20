@@ -1,0 +1,174 @@
+---
+openapi: 3.0.0
+info:
+  title: Flashcard API
+  description: :Flashcard API developed as capstone project of MAD1 course
+  contact:
+    name: U Adithyan
+  version: 1.0.0
+servers:
+- url: https://APPDEV-PROJECT.uadithyan.repl.co
+paths:
+  /user/{username}:
+    description: User resource based on path
+    get:
+      description: Operation to fetch username
+      parameters:
+      - name: username
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: adithyan
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "404":
+          description: user not found
+  /user:
+    description: User resource
+    put:
+      description: :Add a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user1'
+      responses:
+        "201":
+          description: User successfully added
+        "406":
+          description: Invalid Input
+        "409":
+          description: Existing User
+  /deck/{deck_id}:
+    description: Deck resource based on path
+    get:
+      description: Operation to fetch Deck
+      parameters:
+      - name: deck_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 3
+      responses:
+        "200":
+          description: Deck found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deck'
+        "404":
+          description: Deck not found
+    delete:
+      description: Operation to delete a Deck and its corresponding cards
+      parameters:
+      - name: deck_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 3
+      responses:
+        "200":
+          description: Deck deleted
+        "404":
+          description: Deck not found
+  /card/{card_id}:
+    description: Card resource based on path
+    get:
+      description: Operation to fetch Card
+      parameters:
+      - name: card_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 3
+      responses:
+        "200":
+          description: Card found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/card'
+        "404":
+          description: Card not found
+    delete:
+      description: Operation to delete a Card
+      parameters:
+      - name: card_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 3
+      responses:
+        "200":
+          description: Card Deleted
+        "404":
+          description: Card not found
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        name:
+          type: string
+          example: U Adithyan
+        username:
+          type: string
+          example: adithyan
+    user1:
+      type: object
+      properties:
+        name:
+          type: string
+          example: U Adithyan
+        username:
+          type: string
+          example: adithyan
+        password:
+          type: string
+    deck:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Deck name
+        description:
+          type: string
+          example: This is a sample deck
+        score:
+          type: integer
+          example: 66
+        username:
+          type: string
+          example: adithyan
+    card:
+      type: object
+      properties:
+        front:
+          type: string
+          example: Question
+        back:
+          type: string
+          example: Answer
+        deck_id:
+          type: integer
+          example: 3
